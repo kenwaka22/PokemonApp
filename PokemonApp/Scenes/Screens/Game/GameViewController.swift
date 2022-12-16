@@ -93,6 +93,10 @@ final class GameViewController: UIViewController {
         element.spacing = 20
         return element
     }()
+    
+    
+    //
+    lazy var pokemonManager = PokemonManager()
 }
 
 // MARK: - LifeCycle
@@ -100,12 +104,13 @@ extension GameViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        pokemonManager.delegate = self
         setupLayout()
+        pokemonManager.fetchPokemon()
     }
 }
 
 // MARK: - UI
-
 private extension GameViewController {
     func setupLayout(){
         view.addSubview(containerStack)
@@ -143,4 +148,26 @@ private extension GameViewController {
     }
 }
 
+//MARK: - PokemonManagerDelegate
+// Logica de la vista
+extension GameViewController: PokemonManagerDelegate {
+    func didUpdatePokemon(pokemons: [PokemonModel]) {
+        print(pokemons.choose(4))
+    }
+    
+    func didFailWithError(error: Error) {
+        print(error)
+    }
+}
 
+extension Collection where Indices.Iterator.Element == Index {
+    public subscript(safe index: Index) -> Iterator.Element? {
+        return (startIndex <= index && index < endIndex) ? self[index] : nil
+    }
+}
+
+extension Collection {
+    func choose(_ n: Int) -> Array<Element> {
+        Array(shuffled().prefix(n))
+    }
+}

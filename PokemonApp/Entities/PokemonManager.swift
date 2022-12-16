@@ -7,10 +7,21 @@
 
 import Foundation
 
+protocol PokemonManagerDelegate {
+    func didUpdatePokemon(pokemons: [PokemonModel])
+    func didFailWithError(error: Error)
+}
+
 struct PokemonManager {
-    let pokemonURL: String = "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0"
     
-    func performRequest(with urlString: String) {
+    private let pokemonURL: String = "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0"
+    var delegate: PokemonManagerDelegate?
+    
+    public func fetchPokemon() {
+        performRequest(with: pokemonURL)
+    }
+    
+    private func performRequest(with urlString: String) {
         //1. Create URL
         if let url = URL(string: urlString) {
             //2. Create URLSession
@@ -18,12 +29,16 @@ struct PokemonManager {
             //3. Give the session a Task
             let task = session.dataTask(with: url) { data, response, error in
                 if error != nil {
-                    print(error!)
+                    self.delegate?.didFailWithError(error: error!)
+                    print("error")
+                    //print(error!)
                 }
                 
                 if let safeData = data {
                     if let pokemon = self.parseJSON(pokemonData: safeData) {
-                        print(pokemon)
+                        self.delegate?.didUpdatePokemon(pokemons: pokemon)
+                        print("safeData")
+                        //print(pokemon)
                     }
                 }
             }
@@ -32,7 +47,7 @@ struct PokemonManager {
         }
     }
     
-    func parseJSON(pokemonData: Data) -> [PokemonModel]? {
+    private func parseJSON(pokemonData: Data) -> [PokemonModel]? {
         let decoder = JSONDecoder()
         do {
             let decodeData = try decoder.decode(PokemonData.self, from: pokemonData)
