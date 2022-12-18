@@ -24,7 +24,7 @@ public final class NetworkingManager {
     public init () {  }
     
     //<T> para variables genericas
-    public func callService<T: Decodable> (url: String,
+    public func callService<T: Codable> (url: String,
                                             method: HttpMethod,
                                             body: [String: Any]?,
                                             header: [String: String]) async -> Result<T, Error> {

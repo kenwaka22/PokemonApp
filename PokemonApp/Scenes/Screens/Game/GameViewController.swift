@@ -95,7 +95,7 @@ final class GameViewController: UIViewController {
     }()
     
     
-    //
+    //Atributes
     lazy var pokemonManager = PokemonManager()
 }
 
@@ -139,10 +139,12 @@ private extension GameViewController {
             $0.trailing == view.trailingAnchor - 20
             $0.leading == view.leadingAnchor + 20
         }
-        
-        for i in 1...4 {
+    }
+    
+    func createOptionButton(with pokemons: [PokemonModel]){
+        for pokemon in pokemons {
             let button = OptionButton()
-            button.setTitle("\(i)", for: .normal)
+            button.setTitle(pokemon.name, for: .normal)
             buttonStack.addArrangedSubview(button)
         }
     }
@@ -152,7 +154,9 @@ private extension GameViewController {
 // Logica de la vista
 extension GameViewController: PokemonManagerDelegate {
     func didUpdatePokemon(pokemons: [PokemonModel]) {
+        createOptionButton(with: pokemons)
         print(pokemons.choose(4))
+        
     }
     
     func didFailWithError(error: Error) {

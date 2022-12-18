@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PokemonModel: Decodable {
+struct PokemonModel: Codable {
     let name: String
     let imageURL: String
 }
