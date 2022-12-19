@@ -142,10 +142,12 @@ private extension GameViewController {
     }
     
     func createOptionButton(with pokemons: [PokemonModel]){
-        for pokemon in pokemons {
-            let button = OptionButton()
-            button.setTitle(pokemon.name, for: .normal)
-            buttonStack.addArrangedSubview(button)
+        DispatchQueue.main.async {
+            for pokemon in pokemons {
+                let button = OptionButton()
+                button.setTitle(pokemon.name.capitalized, for: .normal)
+                self.buttonStack.addArrangedSubview(button)
+            }
         }
     }
 }
@@ -154,9 +156,7 @@ private extension GameViewController {
 // Logica de la vista
 extension GameViewController: PokemonManagerDelegate {
     func didUpdatePokemon(pokemons: [PokemonModel]) {
-        createOptionButton(with: pokemons)
-        print(pokemons.choose(4))
-        
+        createOptionButton(with: pokemons.choose(4))
     }
     
     func didFailWithError(error: Error) {
