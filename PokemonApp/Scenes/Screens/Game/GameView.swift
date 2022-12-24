@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class GameViewController: UIViewController {
+final class GameView: UIViewController {
     
     //MARK: - UI Components
     
@@ -100,18 +100,21 @@ final class GameViewController: UIViewController {
 }
 
 // MARK: - LifeCycle
-extension GameViewController {
+extension GameView {
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Game"
         view.backgroundColor = .white
         pokemonManager.delegate = self
         setupLayout()
         pokemonManager.fetchPokemon()
+        
+        print("viewDidLoad Game")
     }
 }
 
 // MARK: - UI
-private extension GameViewController {
+private extension GameView {
     func setupLayout(){
         view.addSubview(containerStack)
         containerStack.layout{
@@ -154,7 +157,7 @@ private extension GameViewController {
 
 //MARK: - PokemonManagerDelegate
 // Logica de la vista
-extension GameViewController: PokemonManagerDelegate {
+extension GameView: PokemonManagerDelegate {
     func didUpdatePokemon(pokemons: [PokemonModel]) {
         createOptionButton(with: pokemons.choose(4))
     }

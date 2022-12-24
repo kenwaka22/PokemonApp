@@ -16,17 +16,18 @@ protocol PokedexPresenterProtocol: AnyObject {
     var interactor: PokedexInteractorProtocol? { get set }
     var router: PokedexRouterProtocol? { get set }
 
+    func viewDidLoad()
     func interactorDidFetchPokemons(with result: Result<[PokemonResult], Error>)
 }
 
 class PokedexPresenter: PokedexPresenterProtocol {
     weak var view: PokedexViewProtocol?
-    var interactor: PokedexInteractorProtocol? {
-        didSet {
-            interactor?.getPokemons()
-        }
-    }
+    var interactor: PokedexInteractorProtocol?
     var router: PokedexRouterProtocol?
+    
+    func viewDidLoad() {
+        interactor?.getPokemons()
+    }
 
     func interactorDidFetchPokemons(with result: Result<[PokemonResult], Error>) {
         switch result {

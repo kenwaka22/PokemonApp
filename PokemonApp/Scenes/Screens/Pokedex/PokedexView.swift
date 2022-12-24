@@ -7,6 +7,7 @@
 
 import UIKit
 
+//MARK: - Protocol
 protocol PokedexViewProtocol: AnyObject {
     var presenter: PokedexPresenterProtocol? { get set }
     func update(with pokemons: [PokemonResult])
@@ -51,6 +52,10 @@ extension PokedexView {
         }
         tableView.delegate = self
         tableView.dataSource = self
+        presenter?.viewDidLoad()
+        title = "Pokedex"
+        
+        print("viewDidLoad Pokedex")
     }
     
     override func viewDidLayoutSubviews() {
@@ -61,7 +66,7 @@ extension PokedexView {
     }
 }
 
-//MARK: - Delegate
+//MARK: - TableDelegate
 extension PokedexView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return pokemons.count
@@ -75,7 +80,7 @@ extension PokedexView: UITableViewDelegate, UITableViewDataSource {
 
 }
 
-//MARK: - Protocol
+//MARK: - ViewProtocol
 extension PokedexView: PokedexViewProtocol {
     func update(with pokemons: [PokemonResult]) {
         DispatchQueue.main.async {
@@ -92,5 +97,4 @@ extension PokedexView: PokedexViewProtocol {
             self.label.text = error
         }
     }
-
 }

@@ -15,15 +15,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
-        window?.rootViewController = GameViewController()
-        window?.makeKeyAndVisible()
+//        window?.rootViewController = GameViewController()
+//        window?.makeKeyAndVisible()
         
         //Inicializar modulo VIPER
+        
 //        let pokedexView = PokedexWireFrame.createPokedexModule()
-//        let router = PokedexRouter.start()
-//        let initialVC = router.entry
-//        window?.rootViewController = initialVC
+//        window?.rootViewController = PokedexRouter.start().entry
 //        window?.makeKeyAndVisible()
+        window?.rootViewController = TabBarController()
+        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
