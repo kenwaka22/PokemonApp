@@ -26,8 +26,8 @@ extension TabBarController {
 // MARK: - Helpers
 private extension TabBarController {
     func setupTabBarItem() {
-        let pokedex = templateNavigationController(unselectedImage: UIImage(named: "pokedexunselected"), selectedImage: UIImage(named: "pokedexselected"), rootViewController: pokedexVC ?? UIViewController())
-        let game = templateNavigationController(unselectedImage: UIImage(systemName: "gamecontroller"), selectedImage: nil, rootViewController: gameVC)
+        let pokedex = templateNavigationController(unselectedImage: Images.pokedexUnselected, selectedImage: Images.pokedexSelected, rootViewController: pokedexVC ?? UIViewController())
+        let game = templateNavigationController(unselectedImage: Images.game, selectedImage: nil, rootViewController: gameVC)
         viewControllers = [pokedex, game]
     }
     
