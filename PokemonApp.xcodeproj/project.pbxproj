@@ -28,6 +28,7 @@
 		C32902712956157800675BFA /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32902702956157800675BFA /* TabBarController.swift */; };
 		C32902742956B29D00675BFA /* PokemonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32902732956B29D00675BFA /* PokemonCell.swift */; };
 		C32902772956B93E00675BFA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32902762956B93E00675BFA /* Constants.swift */; };
+		C32902792956BAAA00675BFA /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32902782956BAAA00675BFA /* UIView+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		C32902702956157800675BFA /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		C32902732956B29D00675BFA /* PokemonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonCell.swift; sourceTree = "<group>"; };
 		C32902762956B93E00675BFA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		C32902782956BAAA00675BFA /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,7 +90,7 @@
 			children = (
 				C3290205294C353800675BFA /* Network */,
 				C32901FE294C206000675BFA /* Entities */,
-				C32901F9294B813C00675BFA /* Utils */,
+				C32901F9294B813C00675BFA /* Utils-Extensions */,
 				C32901F2294B77FA00675BFA /* Scenes */,
 				C32901DE294B77C600675BFA /* AppDelegate.swift */,
 				C32901E0294B77C600675BFA /* SceneDelegate.swift */,
@@ -128,13 +130,14 @@
 			path = Game;
 			sourceTree = "<group>";
 		};
-		C32901F9294B813C00675BFA /* Utils */ = {
+		C32901F9294B813C00675BFA /* Utils-Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				C32901FA294B814900675BFA /* Layout.swift */,
 				C32902762956B93E00675BFA /* Constants.swift */,
+				C32902782956BAAA00675BFA /* UIView+Ext.swift */,
 			);
-			path = Utils;
+			path = "Utils-Extensions";
 			sourceTree = "<group>";
 		};
 		C32901FE294C206000675BFA /* Entities */ = {
@@ -261,6 +264,7 @@
 				C3290220294E12A000675BFA /* PokedexRouter.swift in Sources */,
 				C32901F6294B788400675BFA /* GameView.swift in Sources */,
 				C3290207294C35CB00675BFA /* NetworkingManager.swift in Sources */,
+				C32902792956BAAA00675BFA /* UIView+Ext.swift in Sources */,
 				C32901E3294B77C600675BFA /* ViewController.swift in Sources */,
 				C3290204294C347400675BFA /* PokemonManager.swift in Sources */,
 				C32901DF294B77C600675BFA /* AppDelegate.swift in Sources */,

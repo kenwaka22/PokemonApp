@@ -15,6 +15,7 @@ protocol PokemonManagerDelegate {
 struct PokemonManager {
     
     private let pokemonURL: String = "https://pokeapi.co/api/v2/pokemon?limit=151"
+
     var delegate: PokemonManagerDelegate?
     
     public func fetchPokemon() {

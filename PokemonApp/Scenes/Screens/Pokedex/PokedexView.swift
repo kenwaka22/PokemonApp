@@ -19,10 +19,15 @@ class PokedexView: UIViewController {
     
     var presenter: PokedexPresenterProtocol?
     var pokemons: [PokemonResult] = []
+    var pokemonCellUsed = false
     
-    private let tableView: UITableView = {
+    private lazy var tableView: UITableView = {
         let element = UITableView()
-        element.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        if pokemonCellUsed {
+            element.register(PokemonCell.self, forCellReuseIdentifier: PokemonCell.reuseIdentifier)
+        } else {
+            element.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        }
         element.isHidden = true
         element.translatesAutoresizingMaskIntoConstraints = false
         return element
@@ -36,11 +41,14 @@ class PokedexView: UIViewController {
     }()
 }
 
-//MARK: - LifeCycle
+// MARK: - Methods
 extension PokedexView {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemBlue
+    func setTableViewDelegates() {
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
+    
+    func setupLayout(){
         view.addSubview(label)
         view.addSubview(tableView)
         tableView.layout {
@@ -50,11 +58,21 @@ extension PokedexView {
             $0.leading == view.leadingAnchor
 
         }
-        tableView.delegate = self
-        tableView.dataSource = self
-        presenter?.viewDidLoad()
+    }
+    
+    func setupStyle() {
         title = "Pokedex"
-        
+    }
+}
+
+//MARK: - LifeCycle
+extension PokedexView {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupLayout()
+        setupStyle()
+        setTableViewDelegates()
+        presenter?.viewDidLoad()
         print("viewDidLoad Pokedex")
     }
     
@@ -66,18 +84,29 @@ extension PokedexView {
     }
 }
 
-//MARK: - TableDelegate
-extension PokedexView: UITableViewDelegate, UITableViewDataSource {
+//MARK: - DataSource
+extension PokedexView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return pokemons.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "\(indexPath.row + 1). \(pokemons[indexPath.row].name?.capitalized ?? "")"
-        return cell
+        if pokemonCellUsed {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: PokemonCell.reuseIdentifier, for: indexPath) as? PokemonCell else { fatalError("Unable to dequeue PokemonCell") }
+            cell.setupCell(pokemon: pokemons[indexPath.row].name?.capitalized ?? "")
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+            cell.textLabel?.text = "\(indexPath.row + 1). \(pokemons[indexPath.row].name?.capitalized ?? "")"
+            return cell
+        }
     }
 
+}
+
+//MARK: - Delegate
+extension PokedexView: UITableViewDelegate {
+    
 }
 
 //MARK: - ViewProtocol

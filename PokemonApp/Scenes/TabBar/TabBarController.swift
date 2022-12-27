@@ -38,6 +38,8 @@ private extension TabBarController {
     
     func templateNavigationController(unselectedImage: UIImage?, selectedImage: UIImage?, rootViewController: UIViewController) -> UINavigationController{
         let nav = UINavigationController(rootViewController: rootViewController)
+        nav.navigationBar.prefersLargeTitles = true
+        nav.navigationBar.backgroundColor = .white
         nav.title = nil
         nav.tabBarItem.image = unselectedImage
         nav.tabBarItem.selectedImage = selectedImage
