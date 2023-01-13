@@ -22,10 +22,5 @@ final class OptionButton: UIButton {
         backgroundColor = .lightGray
         titleLabel?.font = UIFont(name: "asd", size: 21)
         layer.cornerRadius = 10
-        addTarget(self, action: #selector(optionButtonTapped), for: .touchUpInside)
-    }
-    
-    @objc func optionButtonTapped(){
-        print(title(for: .normal) ?? "err")
     }
 }

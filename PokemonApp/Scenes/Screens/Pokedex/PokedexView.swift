@@ -10,7 +10,7 @@ import UIKit
 //MARK: - Protocol
 protocol PokedexViewProtocol: AnyObject {
     var presenter: PokedexPresenterProtocol? { get set }
-    func update(with pokemons: [PokemonResult])
+    func update(with pokemons: [Pokemon])
     func update(with error: String)
 }
 
@@ -18,7 +18,7 @@ protocol PokedexViewProtocol: AnyObject {
 class PokedexView: UIViewController {
     
     var presenter: PokedexPresenterProtocol?
-    var pokemons: [PokemonResult] = []
+    var pokemons: [Pokemon] = []
     var pokemonCellUsed = false
     
     private lazy var tableView: UITableView = {
@@ -93,11 +93,11 @@ extension PokedexView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if pokemonCellUsed {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: PokemonCell.reuseIdentifier, for: indexPath) as? PokemonCell else { fatalError("Unable to dequeue PokemonCell") }
-            cell.setupCell(pokemon: pokemons[indexPath.row].name?.capitalized ?? "")
+            //cell.setupCell(pokemon: pokemons[indexPath.row].name?.capitalized ?? "")
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-            cell.textLabel?.text = "\(indexPath.row + 1). \(pokemons[indexPath.row].name?.capitalized ?? "")"
+            //cell.textLabel?.text = "\(indexPath.row + 1). \(pokemons[indexPath.row].name?.capitalized ?? "")"
             return cell
         }
     }
@@ -111,7 +111,7 @@ extension PokedexView: UITableViewDelegate {
 
 //MARK: - ViewProtocol
 extension PokedexView: PokedexViewProtocol {
-    func update(with pokemons: [PokemonResult]) {
+    func update(with pokemons: [Pokemon]) {
         DispatchQueue.main.async {
             self.pokemons = pokemons
             self.tableView.reloadData()

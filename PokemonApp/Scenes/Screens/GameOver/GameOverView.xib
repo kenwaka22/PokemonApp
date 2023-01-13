@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GameOverView" customModule="PokemonApp" customModuleProvider="target">
+            <connections>
+                <outlet property="collectionView" destination="2Ef-tr-5sN" id="Amb-kJ-DLZ"/>
+                <outlet property="scoreLabel" destination="eJc-II-VTh" id="cPh-BW-IAZ"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tu puntaje fue de 0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eJc-II-VTh">
+                    <rect key="frame" x="20" y="44" width="374" height="26.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Partida" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LaI-7X-s0g">
+                    <rect key="frame" x="20" y="120.5" width="374" height="36"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="2Ef-tr-5sN">
+                    <rect key="frame" x="0.0" y="176.5" width="414" height="634.5"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="jml-AQ-JM2">
+                        <size key="itemSize" width="128" height="128"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i3q-sk-Anl">
+                    <rect key="frame" x="20" y="821" width="374" height="31"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="filled" title="Nueva Partida"/>
+                    <connections>
+                        <action selector="didNewGameBtnTapped:" destination="-1" eventType="touchUpInside" id="qau-pV-0DI"/>
+                    </connections>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="2Ef-tr-5sN" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="3yl-gg-B1r"/>
+                <constraint firstItem="LaI-7X-s0g" firstAttribute="top" secondItem="eJc-II-VTh" secondAttribute="bottom" constant="50" id="4PU-wq-IyP"/>
+                <constraint firstItem="eJc-II-VTh" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="HXt-dG-EOP"/>
+                <constraint firstItem="LaI-7X-s0g" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="K01-xz-okS"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="2Ef-tr-5sN" secondAttribute="trailing" id="Nu4-BC-2FY"/>
+                <constraint firstItem="i3q-sk-Anl" firstAttribute="top" secondItem="2Ef-tr-5sN" secondAttribute="bottom" constant="10" id="P59-E0-sAG"/>
+                <constraint firstItem="eJc-II-VTh" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="Uch-MC-S5w"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="i3q-sk-Anl" secondAttribute="trailing" constant="20" id="Vyf-DX-ijG"/>
+                <constraint firstItem="i3q-sk-Anl" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="aSK-7b-AXs"/>
+                <constraint firstItem="2Ef-tr-5sN" firstAttribute="top" secondItem="LaI-7X-s0g" secondAttribute="bottom" constant="20" id="bDi-vJ-oLl"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="eJc-II-VTh" secondAttribute="trailing" constant="20" id="ghB-u8-gfF"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="i3q-sk-Anl" secondAttribute="bottom" constant="10" id="qXV-f0-UTR"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="LaI-7X-s0g" secondAttribute="trailing" constant="20" id="wFs-ug-R3g"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="96"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

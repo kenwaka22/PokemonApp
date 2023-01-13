@@ -23,8 +23,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        let pokedexView = PokedexWireFrame.createPokedexModule()
 //        window?.rootViewController = PokedexRouter.start().entry
 //        window?.makeKeyAndVisible()
-        window?.rootViewController = TabBarController()
+        let vc = GameModule().view as! UIViewController
+        let nc = UINavigationController(rootViewController: vc)
+        nc.navigationBar.prefersLargeTitles = true
+        window?.rootViewController = nc
         window?.makeKeyAndVisible()
+        
+        
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

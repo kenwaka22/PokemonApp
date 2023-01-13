@@ -17,7 +17,7 @@ protocol PokedexPresenterProtocol: AnyObject {
     var router: PokedexRouterProtocol? { get set }
 
     func viewDidLoad()
-    func interactorDidFetchPokemons(with result: Result<[PokemonResult], Error>)
+    func interactorDidFetchPokemons(with result: Result<[Pokemon], Error>)
 }
 
 class PokedexPresenter: PokedexPresenterProtocol {
@@ -29,7 +29,7 @@ class PokedexPresenter: PokedexPresenterProtocol {
         interactor?.getPokemons()
     }
 
-    func interactorDidFetchPokemons(with result: Result<[PokemonResult], Error>) {
+    func interactorDidFetchPokemons(with result: Result<[Pokemon], Error>) {
         switch result {
         case .success(let pokemons):
             view?.update(with: pokemons)

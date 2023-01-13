@@ -6,9 +6,19 @@
 //
 
 import UIKit
+import Kingfisher
+
+protocol GameViewProtocol: AnyObject {
+    var presenter: GamePresenterProtocol? { get set }
+    
+    func displayAlert(with error: Error)
+    func displayPokemonOptions(_ pokemons: [String])
+    func displayShadowImage(url: URL)
+    func displayAnswer(isCorrect: Bool, name: String, url: URL)
+    func displayScore(_ score: Int)
+}
 
 final class GameView: UIViewController {
-    
     //MARK: - UI Components
     
     //ContainerStack
@@ -43,7 +53,7 @@ final class GameView: UIViewController {
         return element
     }()
     
-    private lazy var scored: UILabel = {
+    private lazy var scoreLabel: UILabel = {
         let element = UILabel(frame: .zero)
         var score = 0
         element.translatesAutoresizingMaskIntoConstraints = false
@@ -64,7 +74,7 @@ final class GameView: UIViewController {
         return element
     }()
     
-    private lazy var image: UIImageView = {
+    private lazy var imageView: UIImageView = {
         let element = UIImageView()
         element.image = UIImage(named: "pikachu")
         element.layout{
@@ -74,13 +84,12 @@ final class GameView: UIViewController {
         return element
     }()
     
-    private lazy var result: UILabel = {
+    private lazy var resultLabel: UILabel = {
         let element = UILabel(frame: .zero)
-        var pokemonName = "Pikachu"
         element.translatesAutoresizingMaskIntoConstraints = false
         element.font = .boldSystemFont(ofSize: 21)
         element.textColor = .black
-        element.text = "Sí, es un \(pokemonName)"
+        element.text = ""
         return element
     }()
 
@@ -94,28 +103,27 @@ final class GameView: UIViewController {
         return element
     }()
     
-    
-    //Atributes
-    lazy var pokemonManager = PokemonManager()
-}
-
-// MARK: - LifeCycle
-extension GameView {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        title = "Game"
-        view.backgroundColor = .white
-        pokemonManager.delegate = self
-        setupLayout()
-        pokemonManager.fetchPokemon()
+    //OptionBtn
+    private lazy var optionBtn1 = OptionButton()
+    private lazy var optionBtn2 = OptionButton()
+    private lazy var optionBtn3 = OptionButton()
+    private lazy var optionBtn4 = OptionButton()
         
-        print("viewDidLoad Game")
+    //MARK: - Attributes
+    var presenter: GamePresenterProtocol?
+    var sender: UIButton?
+    
+    //MARK: - Methods
+    @objc func didOptionBtnTapped(_ sender: UIButton){
+        self.sender = sender
+        let name = sender.title(for: .normal)
+        guard let name = name else { return }
+        setupBtns()
+        presenter?.checkAnswer(pokemonName: name)
     }
-}
-
-// MARK: - UI
-private extension GameView {
-    func setupLayout(){
+    
+    //UI Methods
+    private func setupLayout(){
         view.addSubview(containerStack)
         containerStack.layout{
             $0.top == view.safeAreaLayoutGuide.topAnchor + 20
@@ -128,53 +136,117 @@ private extension GameView {
         containerStack.addArrangedSubview(headerStack)
         containerStack.addArrangedSubview(pokemonStack)
         containerStack.addArrangedSubview(buttonStack)
+
         
         //Header Stack
         headerStack.addArrangedSubview(headertitle)
-        headerStack.addArrangedSubview(scored)
+        headerStack.addArrangedSubview(scoreLabel)
         
         //Pokemon Stack
-        pokemonStack.addArrangedSubview(image)
-        pokemonStack.addArrangedSubview(result)
+        pokemonStack.addArrangedSubview(imageView)
+        pokemonStack.addArrangedSubview(resultLabel)
         
         //Button Stack
         buttonStack.layout {
             $0.trailing == view.trailingAnchor - 20
             $0.leading == view.leadingAnchor + 20
         }
+        buttonStack.addArrangedSubview(optionBtn1)
+        buttonStack.addArrangedSubview(optionBtn2)
+        buttonStack.addArrangedSubview(optionBtn3)
+        buttonStack.addArrangedSubview(optionBtn4)
     }
     
-    func createOptionButton(with pokemons: [PokemonModel]){
-        DispatchQueue.main.async {
-            for pokemon in pokemons {
-                let button = OptionButton()
-                button.setTitle(pokemon.name.capitalized, for: .normal)
-                self.buttonStack.addArrangedSubview(button)
-            }
+    private func setupBtns() {
+        optionBtn1.addTarget(self, action: #selector(didOptionBtnTapped), for: .touchUpInside)
+        optionBtn2.addTarget(self, action: #selector(didOptionBtnTapped), for: .touchUpInside)
+        optionBtn3.addTarget(self, action: #selector(didOptionBtnTapped), for: .touchUpInside)
+        optionBtn4.addTarget(self, action: #selector(didOptionBtnTapped), for: .touchUpInside)
+    }
+}
+
+// MARK: - LifeCycle
+extension GameView {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        setupLayout()
+        presenter?.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        presenter?.newGame()
+        self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.navigationBar.prefersLargeTitles = false
+    }
+}
+
+// MARK: - GameViewProtocol
+extension GameView: GameViewProtocol {
+    func displayAlert(with error: Error) {
+        let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .cancel)
+        alert.addAction(action)
+        self.present(alert, animated: true)
+    }
+    
+    func displayPokemonOptions(_ pokemons: [String]) {
+        resultLabel.text = ""
+        
+        optionBtn1.setTitle(pokemons[0].capitalized, for: .normal)
+        optionBtn1.addTarget(self, action: #selector(didOptionBtnTapped), for: .touchUpInside)
+        
+        optionBtn2.setTitle(pokemons[1].capitalized, for: .normal)
+        optionBtn2.addTarget(self, action: #selector(didOptionBtnTapped), for: .touchUpInside)
+        
+        optionBtn3.setTitle(pokemons[2].capitalized, for: .normal)
+        optionBtn3.addTarget(self, action: #selector(didOptionBtnTapped), for: .touchUpInside)
+        
+        optionBtn4.setTitle(pokemons[3].capitalized, for: .normal)
+        optionBtn4.addTarget(self, action: #selector(didOptionBtnTapped), for: .touchUpInside)
+
+        guard let sender = sender else { return }
+        
+        //sender.addTarget(self, action: #selector(didOptionBtnTapped), for: .touchUpInside)
+        sender.backgroundColor = .lightGray
+        sender.setTitleColor(.black, for: .normal)
+    }
+    
+    
+    func displayShadowImage(url: URL) {
+         DispatchQueue.main.async {
+             let effect = ColorControlsProcessor(brightness: -1, contrast: 1, saturation: 1, inputEV: 0)
+             self.imageView.kf.setImage(
+                with: url,
+                options: [
+                    .processor(effect)
+                ]
+             )
         }
     }
-}
-
-//MARK: - PokemonManagerDelegate
-// Logica de la vista
-extension GameView: PokemonManagerDelegate {
-    func didUpdatePokemon(pokemons: [PokemonModel]) {
-        createOptionButton(with: pokemons.choose(4))
+    
+    func displayAnswer(isCorrect: Bool, name: String, url: URL) {
+        guard let sender = sender else { return }
+        if isCorrect {
+            resultLabel.text = "Sí, es un \(name)"
+            sender.backgroundColor = UIColor.systemGreen
+        } else {
+            resultLabel.text = "No, es un \(name)"
+            sender.backgroundColor = UIColor.systemRed
+            sender.setTitleColor(.white, for: .normal)
+            
+        }
+        
+        self.imageView.kf.setImage(with: url)
+        
+        Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { [weak self] timer in
+            isCorrect ? self?.presenter?.getNewOptions() : self?.presenter?.showGameOverView()
+        }
     }
     
-    func didFailWithError(error: Error) {
-        print(error)
+    func displayScore(_ score: Int) {
+        scoreLabel.text = "Puntaje: \(score)"
     }
-}
 
-extension Collection where Indices.Iterator.Element == Index {
-    public subscript(safe index: Index) -> Iterator.Element? {
-        return (startIndex <= index && index < endIndex) ? self[index] : nil
-    }
-}
-
-extension Collection {
-    func choose(_ n: Int) -> Array<Element> {
-        Array(shuffled().prefix(n))
-    }
 }

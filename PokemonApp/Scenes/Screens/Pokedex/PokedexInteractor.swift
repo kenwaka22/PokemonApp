@@ -27,7 +27,7 @@ class PokedexInteractor: PokedexInteractorProtocol {
 
             do {
                 print("Success")
-                let entities = try JSONDecoder().decode(PokemonData.self, from: data)
+                let entities = try JSONDecoder().decode(PokemonList.self, from: data)
                 self?.presenter?.interactorDidFetchPokemons(with: .success(entities.results ?? []))
             } catch {
                 print("Error")
