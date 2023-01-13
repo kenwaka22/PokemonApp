@@ -10,7 +10,5 @@ Pokedex + Who is that Pokemon Game
  
 ## Demo Who is that Pokemon Game
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
-
-<img src="images/demo.mov" width=350 />
+<img src="images/demo.mov" width=250 />
 
