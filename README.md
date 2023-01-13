@@ -10,5 +10,5 @@ Pokedex + Who is that Pokemon Game
  
 ## Demo Who is that Pokemon Game
 
-<img src="images/demo.mov" width=150 />
+<img src="images/demo.mov" width=200 />
 
